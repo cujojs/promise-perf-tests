@@ -1,0 +1,10 @@
+{
+	"name": "promise-perf-test",
+	"version": "0.1.0",
+	"dependencies": {
+		"when": "",
+		"q": "",
+		"deferred": "",
+		"jquery": ""
+	}
+}
