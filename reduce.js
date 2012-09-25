@@ -26,7 +26,8 @@ for(i = 1; i<iterations; i++) {
 }
 
 console.log('iterations:', iterations);
-console.log('expected computation result:', expected, '\n');
+console.log('expected computation result:', expected);
+console.log('NOTE: See comments in reduce.js for why only 598 iterations\n');
 
 runTest('when.js', libs.when,
 	function(val) { return libs.when.resolve(val); }

@@ -1,5 +1,5 @@
 {
-	"name": "promise-perf-test",
+	"name": "promise-perf-tests",
 	"version": "0.1.0",
 	"dependencies": {
 		"when": "",
