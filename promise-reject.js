@@ -8,46 +8,43 @@
 // future turn).  This is a pure, brute force sync code test.
 //
 
-var libs, when, q, JQDeferred, deferred, d, i, start, iterations;
+//
+// Performance of raw promise creation speed.  If the library
+// provides a lighter weight way to create a resolved promise
+// instead of a deferred, it's used here.
+//
+// This test DOES NOT care about when all the promises
+// have actually resolved (e.g. Q promises always resolve in a
+// future turn).  This is a pure, brute force sync code test.
+//
+
+var libs, Test, test, when, q, JQDeferred, deferred, d, i, start, iterations;
 
 libs = require('./libs');
+Test = require('./test');
 
 iterations = 10000;
-
-console.log('iterations:', iterations, '\n');
+test = new Test('promise-reject', iterations);
 
 when = libs.when;
 q = libs.q;
 deferred = libs.deferred;
 JQDeferred = libs.jquery.Deferred;
 
-start = Date.now();
-for(i = 0; i<iterations; i++) {
-	d = when.reject(i);
-}
-logResult('when.js', start);
+runTest('when.js', function(x) { return when.reject(x); });
+runTest('Q', function(x) { return q.reject(x); });
+runTest('deferred', function(x) { return deferred(new Error(x)); });
+runTest('jQuery', function(x) { return new JQDeferred().reject(x).promise(); });
 
-start = Date.now();
-for(i = 0; i<iterations; i++) {
-	d = q.reject(i);
-}
-logResult('Q', start);
+test.report();
 
-start = Date.now();
-for(i = 0; i<iterations; i++) {
-	d = deferred(new Error(i));
-}
-logResult('deferred', start);
+function runTest(name, createPromise) {
+	var start;
 
-start = Date.now();
-for(i = 0; i<iterations; i++) {
-	d = new JQDeferred().reject(i).promise();
-}
-logResult('jQuery', start);
+	start = Date.now();
+	for(i = 0; i<iterations; i++) {
+		createPromise(i);
+	}
 
-function logResult(name, start) {
-	var end = Date.now() - start;
-	console.log(name);
-	console.log(' total: ' + end + 'ms');
-	console.log('');
+	test.addResult(name, Date.now() - start);
 }

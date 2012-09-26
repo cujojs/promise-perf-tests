@@ -22,11 +22,13 @@
 // of this test.
 //
 
-var libs, i, array, expected, iterations;
+var libs, Test, test, i, array, expected, iterations;
 
 libs = require('./libs');
+Test = require('./test');
 
 iterations = 10000;
+
 array = [];
 expected = 0;
 
@@ -35,8 +37,8 @@ for(i = 1; i<iterations; i++) {
 	array.push(i);
 }
 
-console.log('iterations:', iterations);
-console.log('expected computation result:', expected, '\n');
+test = new Test('promise-sequence', iterations,
+	'expected computation result: ' + expected);
 
 runTest('when.js',
 	function(val) { return libs.when.resolve(val); }
@@ -54,8 +56,10 @@ runTest('jQuery',
 	function(val) { return new libs.jquery.Deferred().resolve(val); }
 );
 
+test.report();
+
 function runTest(name, createPromise) {
-	var start, split, p;
+	var start, p;
 
 	// Start timer
 	start = Date.now();
@@ -71,17 +75,5 @@ function runTest(name, createPromise) {
 		});
 	}, createPromise(0));
 
-	// Compute how long the raw reduce took
-	split = Date.now() - start;
-
-	// Compute how long it takes the promise chain to unwind
-	p.then(function(result) {
-		var end = Date.now() - start;
-		console.log(name);
-		console.log(' reduce: ' + split + 'ms');
-		console.log(' total: ' + end + 'ms');
-		console.log(' computation result: ' + result, (expected === result) ? '': '**');
-		console.log('');
-	});
-
+	test.addResult(name, Date.now() - start);
 }

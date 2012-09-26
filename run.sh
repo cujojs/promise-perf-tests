@@ -2,9 +2,6 @@
 
 # Simple test runner and separator
 function runTest {
-	echo "---------------------------"
-	echo "Test: $1"
-	echo "---------------------------"
 	node $1
 }
 
@@ -21,5 +18,6 @@ runTest defer-sequence.js
 
 # Higher order operations, if supported
 runTest map.js
-runTest reduce.js
+runTest reduce-small.js
+runTest reduce-large.js
 

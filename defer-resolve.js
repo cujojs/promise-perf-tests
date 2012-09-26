@@ -8,58 +8,49 @@
 // future turn).  This is a pure, brute force sync code test.
 //
 
-var libs, when, q, JQDeferred, deferred, d, i, start, iterations;
+var libs, Test, test, when, q, JQDeferred, deferred, d, i, start, iterations;
 
 libs = require('./libs');
+Test = require('./test');
 
 iterations = 10000;
-
-console.log('iterations:', iterations, '\n');
+test = new Test('defer-resolve', iterations);
 
 when = libs.when;
 q = libs.q;
 deferred = libs.deferred;
 JQDeferred = libs.jquery.Deferred;
 
-start = Date.now();
-for(i = 0; i<iterations; i++) {
-	d = when.defer();
-	d.promise.then(addOne);
-	d.resolve(i);
-}
-logResult('when.js', start);
+runTest('when.js', function() { return when.defer(); });
+runTest('Q', function() { return q.defer(); });
+runTest('deferred', function() { return deferred(); });
+runTest('jQuery', function() { return new JQDeferred(); });
 
-start = Date.now();
-for(i = 0; i<iterations; i++) {
-	d = q.defer();
-	d.promise.then(addOne);
-	d.resolve(i);
-}
-logResult('Q', start);
+test.report();
 
-start = Date.now();
-for(i = 0; i<iterations; i++) {
-	d = deferred();
-	d.promise.then(addOne);
-	d.resolve(i);
-}
-logResult('deferred', start);
+function runTest(name, createDeferred) {
+	var start, d, getPromise;
 
-start = Date.now();
-for(i = 0; i<iterations; i++) {
-	d = new JQDeferred();
-	d.promise().then(addOne);
-	d.resolve(i);
+	getPromise = function(def) {
+		if(typeof def.promise.then === 'function') {
+			getPromise = function(def) { return def.promise; };
+		} else {
+			getPromise = function(def) { return def.promise(); };
+		}
+
+		return getPromise(def);
+	};
+
+	start = Date.now();
+	for(i = 0; i<iterations; i++) {
+		d = createDeferred();
+		getPromise(d).then(addOne);
+		d.resolve(i);
+	}
+
+	test.addResult(name, Date.now() - start);
 }
-logResult('jQuery', start);
 
 function addOne(x) {
 	return x + 1;
-}
-
-function logResult(name, start) {
-	var end = Date.now() - start;
-	console.log(name);
-	console.log(' total: ' + end + 'ms');
-	console.log('');
 }

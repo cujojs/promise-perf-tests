@@ -8,14 +8,18 @@
 // when.js's reduce uses Array.prototype.reduce, or a polyfill,
 // neither of which uses recursion, thus has no stack depth limitations.
 
-var libs, i, array, expected, iterations;
+var libs, Test, test, i, array, expected, iterations;
 
 libs = require('./libs');
-
-iterations = 598;
+Test = require('./test');
 
 // > 598 causes stack overflow in deferred.reduce
 // iterations = 599;
+iterations = 598;
+
+test = new Test('map', iterations,
+	'NOTE: in node v0.8.8, deferred.reduce causes a\nstack overflow for an array length > 598'
+);
 
 array = [];
 expected = 0;
@@ -25,10 +29,6 @@ for(i = 1; i<iterations; i++) {
 	array.push(i);
 }
 
-console.log('iterations:', iterations);
-console.log('expected computation result:', expected);
-console.log('NOTE: See comments in reduce.js for why only 598 iterations\n');
-
 runTest('when.js', libs.when,
 	function(val) { return libs.when.resolve(val); }
 );
@@ -37,6 +37,8 @@ runTest('deferred', libs.deferred,
 	function(val) { return libs.deferred(val); }
 );
 
+test.report();
+
 function runTest(name, lib, createPromise) {
 	var start = Date.now();
 
@@ -44,10 +46,6 @@ function runTest(name, lib, createPromise) {
 		return createPromise(current + next);
 	}, createPromise(0))
 	.then(function(result) {
-		var end = Date.now() - start;
-		console.log(name);
-		console.log(' total: ' + end + 'ms');
-		console.log(' computation result: ' + result, (expected === result) ? '': '**');
-		console.log('');
+		test.addResult(name, Date.now() - start);
 	});
 }

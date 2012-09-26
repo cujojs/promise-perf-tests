@@ -4,7 +4,7 @@
 // This test DOES NOT care about when all the promises
 // have actually resolved (e.g. Q promises always resolve in a
 // future turn).  This is a pure, brute force sync code test.
-// 
+//
 // Note: it appears as if unresolved deferred()s prevent the
 // process from exiting when execution reaches the end of this
 // file, hence the process.exit().
@@ -13,48 +13,35 @@
 // results.
 //
 
-var libs, when, q, JQDeferred, deferred, d, i, start, iterations;
+var libs, Test, test, when, q, JQDeferred, deferred, d, i, start, iterations;
 
 libs = require('./libs');
+Test = require('./test');
 
 iterations = 10000;
-
-console.log('iterations:', iterations, '\n');
+test = new Test('defer-create', iterations);
 
 when = libs.when;
 q = libs.q;
 deferred = libs.deferred;
 JQDeferred = libs.jquery.Deferred;
 
-start = Date.now();
-for(i = 0; i<iterations; i++) {
-	d = when.defer();
-}
-logResult('when.js', start);
+runTest('when.js', function() { return when.defer(); });
+runTest('Q', function() { return q.defer(); });
+runTest('deferred', function() { return deferred(); });
+runTest('jQuery', function() { return new JQDeferred(); });
 
-start = Date.now();
-for(i = 0; i<iterations; i++) {
-	d = q.defer();
-}
-logResult('Q', start);
+test.report();
 
-start = Date.now();
-for(i = 0; i<iterations; i++) {
-	d = deferred();
-}
-logResult('deferred', start);
+function runTest(name, createDeferred) {
+	var start;
 
-start = Date.now();
-for(i = 0; i<iterations; i++) {
-	d = new JQDeferred();
-}
-logResult('jQuery', start);
+	start = Date.now();
+	for(i = 0; i<iterations; i++) {
+		createDeferred();
+	}
 
-function logResult(name, start) {
-	var end = Date.now() - start;
-	console.log(name);
-	console.log(' total: ' + end + 'ms');
-	console.log('');
+	test.addResult(name, Date.now() - start);
 }
 
 // This seems to be necessary as deferred's unresolved promises
