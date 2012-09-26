@@ -37,29 +37,25 @@ test = new Test('defer-sequence', iterations,
 	'expected computation result: ' + expected);
 
 runTest('when.js',
-	function() { return libs.when.defer(); },
-	function(val) { return libs.when.resolve(val); }
+	function() { return libs.when.defer(); }
 );
 
 runTest('Q',
-	function() { return libs.q.defer(); },
-	function(val) { return libs.q.resolve(val); }
+	function() { return libs.q.defer(); }
 );
 
 runTest('deferred',
-	function() { return libs.deferred(); },
-	function(val) { return libs.deferred(val); }
+	function() { return libs.deferred(); }
 );
 
 runTest('jQuery',
-	function() { return new libs.jquery.Deferred(); },
-	function(val) { var d = new libs.jquery.Deferred(); d.resolve(val); return d.promise(); }
+	function() { return new libs.jquery.Deferred(); }
 );
 
 test.report();
 
-function runTest(name, createDeferred, createPromise) {
-	var start, p, getPromise;
+function runTest(name, createDeferred) {
+	var start, d, getPromise;
 
 	// Self-optimizing getPromise to handle API variations
 	getPromise = function(def) {
@@ -74,11 +70,14 @@ function runTest(name, createDeferred, createPromise) {
 
 	// Start timer
 	start = Date.now();
+
+	d = createDeferred();
+	d.resolve(0);
 	
 	// Use reduce to chain <iteration> number of promises back
 	// to back.  The final result will only be computed after
 	// all promises have resolved
-	p = array.reduce(function(promise, nextVal) {
+	array.reduce(function(promise, nextVal) {
 		return promise.then(function(currentVal) {
 			// Uncomment if you want progress indication:
 			//if(nextVal % 1000 === 0) console.log(name, nextVal);
@@ -86,7 +85,7 @@ function runTest(name, createDeferred, createPromise) {
 			d.resolve(currentVal + nextVal);
 			return getPromise(d);
 		});
-	}, createPromise(0));
+	}, getPromise(d));
 
 	test.addResult(name, Date.now() - start);
 }
