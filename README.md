@@ -1,6 +1,6 @@
 # Promise implementation performance tests
 
-This is a set of *basic* performance tests for promise implementations.  As is usually the case, take these with the usual grains salt.  That said, they should give a reasonable ballpark comparison of the performance characteristics of common, basic operations that most promise libraries provide.
+This is a set of *basic* performance tests for promise implementations.  As is usually the case, take these with the usual grains of salt.  That said, they should give a reasonable ballpark comparison of the performance characteristics of common, basic operations that most promise libraries provide.
 
 Of course, performance is not the only thing to consider in a promise library.  Interoperability via a proposed standard, such as Promises/A, API convenience, safety, and even code size (for browser applications) are all important, and application-specific considerations.
 
