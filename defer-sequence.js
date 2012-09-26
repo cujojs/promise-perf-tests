@@ -3,15 +3,6 @@
 // to compute a final result.  Promises will resolve sequentially
 // with no overlap.
 //
-// This test outputs 2 times:
-//  1) reduce time - the time it takes array.reduce() to execute
-//     and create all the promises
-//  2) total time - time it takes all the promises to resolve and
-//     compute the final result
-//
-// Note that for Q, these times will always be different since Q
-// promises always resolve in a future turn.
-//
 // Note that jQuery.Deferred.then() is not fully Promises/A compliant
 // and so will not compute the correct result.  This is known,
 // and should not be a factor in the performance characteristics
