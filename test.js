@@ -1,5 +1,7 @@
 module.exports = Test;
 
+// TODO: Abstract test reporting and create CSV reporter
+
 function Test(testName, iterations, description) {
 	this.name = testName;
 	this.iterations = iterations;
@@ -34,7 +36,7 @@ Test.prototype = {
 		}
 
 		console.log('----------------------------------------------------------');
-		console.log(columns([
+		console.log(csv([
 			'Name',
 			'Elapsed',
 			'Average',
@@ -66,7 +68,7 @@ function sortByTotal(r1, r2) {
 }
 
 function formatNumber(x, n, suffix) {
-	return x === 0 ? '-' : Number(x).toFixed(n) + suffix;
+	return x === 0 ? '-' : Number(x).toFixed(n);
 }
 
 function Result(name, iterations, time, value) {
