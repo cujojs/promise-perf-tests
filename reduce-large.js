@@ -16,7 +16,7 @@ Test = require('./test');
 // > 598 causes stack overflow in deferred.reduce
 iterations = 10000;
 
-test = new Test('map', iterations,
+test = new Test('reduce-large', iterations,
 	'NOTE: in node v0.8.8, deferred.reduce causes a\nstack overflow for an array length > 598'
 );
 
