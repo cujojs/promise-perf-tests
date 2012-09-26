@@ -33,7 +33,7 @@ for(i = 1; i<iterations; i++) {
 	array.push(i);
 }
 
-test = new Test('defer-create', iterations,
+test = new Test('defer-sequence', iterations,
 	'expected computation result: ' + expected);
 
 runTest('when.js',
