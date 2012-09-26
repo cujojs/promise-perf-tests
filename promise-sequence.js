@@ -28,8 +28,7 @@ for(i = 1; i<iterations; i++) {
 	array.push(i);
 }
 
-test = new Test('promise-sequence', iterations,
-	'expected computation result: ' + expected);
+test = new Test('promise-sequence', iterations);
 
 runTest('when.js',
 	function(val) { return libs.when.resolve(val); }

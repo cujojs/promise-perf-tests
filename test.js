@@ -29,6 +29,7 @@ Test.prototype = {
 
 	report: function() {
 		console.log('');
+		console.log('==========================================================');
 		console.log('Test:', this.name, 'x', this.iterations);
 
 		if(this.description) {
@@ -40,7 +41,7 @@ Test.prototype = {
 			'Name',
 			'Time ms',
 			'Avg ms',
-			'Diff'
+			'Diff %'
 		], 8));
 		var results = this.getSortedResults();
 

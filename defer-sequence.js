@@ -24,8 +24,7 @@ for(i = 1; i<iterations; i++) {
 	array.push(i);
 }
 
-test = new Test('defer-sequence', iterations,
-	'expected computation result: ' + expected);
+test = new Test('defer-sequence', iterations);
 
 runTest('when.js',
 	function() { return libs.when.defer(); }
