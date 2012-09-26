@@ -20,7 +20,7 @@ Right now, the tests are runnable en masse via the `run.sh` script in unix-like 
 
 ## when.js
 
-The test harness sets when.js's "paranoid" setting to false.  Currently, the only thing this does is prevent when.js from calling `Object.freeze` on its promises.
+The test harness sets [when.js](https://github.com/cujojs/when)'s "paranoid" setting to false.  Currently, the only thing this does is prevent when.js from calling `Object.freeze` on its promises.
 
 We feel this is acceptable because:
 
@@ -31,11 +31,15 @@ You can run the tests with when.js in paranoid mode by changing a line in `libs.
 
 ## Q
 
-Q calls `Object.freeze` on its promises, and so it incurs the huge v8-imposed performance penalty (see [above](#whenjs)).  Q also enforces *next-turn resolutions*.  This is a safety feature that can help avoid certain types of programmer errors and stack overflows, but at a performance cost since all promise resolutions are delayed until the next turn of the JS event loop.
+[Q](https://github.com/kriskowal/q) calls `Object.freeze` on its promises, and so it incurs the huge v8-imposed performance penalty (see [above](#whenjs)).  Q also enforces *next-turn resolutions*.  This is a safety feature that can help avoid certain types of programmer errors and stack overflows, but at a performance cost since all promise resolutions are delayed until the next turn of the JS event loop.
 
 ## jQuery Deferred
 
 jQuery Deferred is not intended to be fully Promises/A compliant in its forwarding behavior.  We've done our best to design the tests so that that does not affect the performance characteristics.  However, it *does* affect the *computation results* of some tests.  These are noted in the output and can be ignored for performance testing purposes.
+
+## deferred
+
+[deferred](https://github.com/medikoo/deferred) bears some similarity to when.js's behavior when running in non-paranoid mode.  It does not use Object.freeze() and doesn't employ *next-turn resolution*.
 
 # Test Environment
 
