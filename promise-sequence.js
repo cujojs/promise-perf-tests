@@ -44,7 +44,7 @@ runTest('deferred',
 );
 
 runTest('jQuery',
-	function(val) { return new libs.jquery.Deferred().resolve(val); }
+	function(val) { return new libs.jquery.Deferred().resolve(val).promise(); }
 );
 
 test.report();
