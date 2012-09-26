@@ -36,22 +36,22 @@ Test.prototype = {
 		}
 
 		console.log('----------------------------------------------------------');
-		console.log(csv([
+		console.log(columns([
 			'Name',
-			'Elapsed',
-			'Average',
+			'Time ms',
+			'Avg ms',
 			'Diff'
-		], 9));
+		], 8));
 		var results = this.getSortedResults();
 
 		results.forEach(function(r) {
 			var diff = difference(results[0].total, r.total);
 			console.log(columns([
 				r.name,
-				formatNumber(r.total, 0, 'ms'),
-				formatNumber(r.avg, 4, 'ms'),
-				formatNumber(diff, 2, '%')
-			], 9));
+				formatNumber(r.total, 0),
+				formatNumber(r.avg, 4),
+				formatNumber(diff, 2)
+			], 8));
 		});
 
 		if(this.errors.length) {
@@ -67,7 +67,7 @@ function sortByTotal(r1, r2) {
 	return r1.total - r2.total;
 }
 
-function formatNumber(x, n, suffix) {
+function formatNumber(x, n) {
 	return x === 0 ? '-' : Number(x).toFixed(n);
 }
 
