@@ -8,7 +8,7 @@ var libs, Test, test, i, array, iterations;
 libs = require('./libs');
 Test = require('./test');
 
-iterations = 100000;
+iterations = 10000;
 test = new Test('map', iterations);
 
 array = [];
