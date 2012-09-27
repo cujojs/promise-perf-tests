@@ -35,11 +35,11 @@ You can run the tests with when.js in paranoid mode by changing a line in `libs.
 
 ## jQuery Deferred
 
-jQuery Deferred is not intended to be fully Promises/A compliant in its forwarding behavior.  We've done our best to design the tests so that that does not affect the performance characteristics.  However, it *does* affect the *computation results* of some tests.  These are noted in the output and can be ignored for performance testing purposes.
+[jQuery](http://jquery.com) Deferred is not intended to be fully Promises/A compliant in its forwarding behavior.  We've done our best to design the tests so that that does not affect the performance characteristics.  While this *does* affect the *computation results* of some tests, it can be ignored for most performance testing purposes.
 
 ## deferred
 
-[deferred](https://github.com/medikoo/deferred) bears some similarity to when.js's behavior when running in non-paranoid mode.  It does not use Object.freeze() and doesn't employ *next-turn resolution*.
+[deferred](https://github.com/medikoo/deferred) bears some similarity to when.js's behavior when running in non-paranoid mode.  It does not use `Object.freeze` and doesn't employ *next-turn resolution*.
 
 # Test Environment
 
