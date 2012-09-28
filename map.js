@@ -32,7 +32,7 @@ function runTest(name, lib, createPromise) {
 
 	lib.map(array, function(value) {
 		return createPromise(value * 2);
-	}, createPromise(0))
+	})
 	.then(function() {
 		test.addResult(name, Date.now() - start);
 	});
