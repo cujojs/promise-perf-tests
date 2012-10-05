@@ -46,6 +46,7 @@ You can run the tests with when.js in paranoid mode by changing a line in `libs.
 These tests were run on a MacBook Pro Intel Core i7, 2.3Ghz, 8g RAM, 256g SSD, using Node.js v0.8.10 installed via homebrew and the following library versions (`npm ls`):
 
 ```text
+promise-perf-tests@0.1.1 /Users/brian/Projects/cujojs/promise-perf-tests
 ├─┬ deferred@0.6.0
 │ ├── es5-ext@0.9.1
 │ ├── event-emitter@0.2.1
@@ -66,7 +67,7 @@ These tests were run on a MacBook Pro Intel Core i7, 2.3Ghz, 8g RAM, 256g SSD, u
 │ ├── navigator@1.0.1
 │ └── xmlhttprequest@1.4.2
 ├── q@0.8.8
-└── when@1.5.0
+└── when@1.5.1
 ```
 
 # Test Results
@@ -78,71 +79,71 @@ Each test is sorted from best to worst time. Times are in milliseconds, and Diff
 Test: promise-create x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when.js         5   0.0005        -
-deferred       17   0.0017   240.00
-jQuery        127   0.0127  2440.00
-Q             143   0.0143  2760.00
+when.js         4   0.0004        -
+deferred        8   0.0008   100.00
+jQuery        130   0.0130  3150.00
+Q             141   0.0141  3425.00
 
 ==========================================================
 Test: promise-reject x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when.js         8   0.0008        -
-deferred       88   0.0088  1000.00
-jQuery        128   0.0128  1500.00
-Q             171   0.0171  2037.50
+when.js         9   0.0009        -
+deferred       87   0.0087   866.67
+jQuery        126   0.0126  1300.00
+Q             168   0.0168  1766.67
 
 ==========================================================
 Test: promise-sequence x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when.js         7   0.0007        -
-deferred       37   0.0037   428.57
-jQuery        134   0.0134  1814.29
-Q             309   0.0309  4314.29
+when.js         6   0.0006        -
+deferred       39   0.0039   550.00
+jQuery        145   0.0145  2316.67
+Q             314   0.0314  5133.33
 
 ==========================================================
 Test: defer-create x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when.js        18   0.0018        -
-deferred       20   0.0020    11.11
-jQuery        133   0.0133   638.89
-Q             233   0.0233  1194.44
+when.js        13   0.0013        -
+deferred       22   0.0022    69.23
+jQuery        125   0.0125   861.54
+Q             222   0.0222  1607.69
 
 ==========================================================
 Test: defer-resolve x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when.js        63   0.0063        -
-jQuery        183   0.0183   190.48
-deferred      276   0.0276   338.10
-Q             783   0.0783  1142.86
+when.js        35   0.0035        -
+jQuery        176   0.0176   402.86
+deferred      284   0.0284   711.43
+Q             703   0.0703  1908.57
 
 ==========================================================
 Test: defer-reject x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when.js        47   0.0047        -
-jQuery        140   0.0140   197.87
-deferred      343   0.0343   629.79
-Q             754   0.0754  1504.26
+when.js        26   0.0026        -
+jQuery        141   0.0141   442.31
+deferred      311   0.0311  1096.15
+Q             738   0.0738  2738.46
 
 ==========================================================
 Test: defer-sequence x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when.js        33   0.0033        -
-deferred      135   0.0135   309.09
-jQuery        153   0.0153   363.64
-Q             296   0.0296   796.97
+when.js        24   0.0024        -
+deferred      150   0.0150   525.00
+jQuery        193   0.0193   704.17
+Q             278   0.0278  1058.33
 
 ==========================================================
 Test: map x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when.js        19   0.0019        -
-deferred       34   0.0034    78.95
+when.js        17   0.0017        -
+deferred       29   0.0029    70.59
 
 ==========================================================
 Test: reduce-small x 598
@@ -159,6 +160,6 @@ NOTE: in node v0.8.8, deferred.reduce causes a
 stack overflow for an array length > 598
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when.js        19   0.0019        -
+when.js        16   0.0016        -
 deferred [RangeError: Maximum call stack size exceeded]
 ```
