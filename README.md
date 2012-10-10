@@ -46,8 +46,8 @@ You can run the tests with when.js in paranoid mode by changing a line in `libs.
 These tests were run on a MacBook Pro Intel Core i7, 2.3Ghz, 8g RAM, 256g SSD, using Node.js v0.8.10 installed via homebrew and the following library versions (`npm ls`):
 
 ```text
-promise-perf-tests@0.1.1 /Users/brian/Projects/cujojs/promise-perf-tests
-├─┬ deferred@0.6.0
+promise-perf-tests@0.1.2 /Users/brian/Projects/cujojs/promise-perf-tests
+├─┬ deferred@0.6.1
 │ ├── es5-ext@0.9.1
 │ ├── event-emitter@0.2.1
 │ └── next-tick@0.1.0
@@ -66,7 +66,7 @@ promise-perf-tests@0.1.1 /Users/brian/Projects/cujojs/promise-perf-tests
 │ ├── location@0.0.1
 │ ├── navigator@1.0.1
 │ └── xmlhttprequest@1.4.2
-├── q@0.8.8
+├── q@0.8.9
 └── when@1.5.1
 ```
 
