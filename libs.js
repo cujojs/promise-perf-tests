@@ -9,12 +9,12 @@
 // except Q, which as far as I can tell, has no way of
 // disabling its calls to Object.freeze()
 
-process.env.WHEN_PARANOID = false;
+// process.env.WHEN_PARANOID = false;
 
 // Load all promise impls
 module.exports = {
-	when: require('when'),
-	q: require('q'),
-	deferred: require('deferred'),
-	jquery: require('jquery')
+	when: require('lib/adapter/when'),
+	q: require('lib/adapter/q'),
+	deferred: require('lib/adapter/deferred'),
+	jquery: require('lib/adapter/jquery')
 };

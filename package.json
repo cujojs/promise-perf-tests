@@ -6,5 +6,8 @@
 		"q": "",
 		"deferred": "",
 		"jquery": ""
+	},
+	"scripts": {
+		"test": "./run.sh"
 	}
 }

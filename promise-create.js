@@ -8,7 +8,7 @@
 // future turn).  This is a pure, brute force sync code test.
 //
 
-var libs, Test, test, when, q, JQDeferred, deferred, d, i, start, iterations;
+var libs, Test, test, iterations;
 
 libs = require('./libs');
 Test = require('./test');
@@ -16,20 +16,14 @@ Test = require('./test');
 iterations = 10000;
 test = new Test('promise-create', iterations);
 
-when = libs.when;
-q = libs.q;
-deferred = libs.deferred;
-JQDeferred = libs.jquery.Deferred;
-
-runTest('when.js', function(x) { return when.resolve(x); });
-runTest('Q', function(x) { return q.resolve(x); });
-runTest('deferred', function(x) { return deferred(x); });
-runTest('jQuery', function(x) { return new JQDeferred().resolve(x).promise(); });
+for(var lib in libs) {
+	runTest(lib, libs[lib].fulfilled);
+}
 
 test.report();
 
 function runTest(name, createPromise) {
-	var start;
+	var start, i;
 
 	start = Date.now();
 	for(i = 0; i<iterations; i++) {
