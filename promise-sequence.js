@@ -13,10 +13,11 @@
 // of this test.
 //
 
-var libs, Test, test, i, array, expected, iterations;
+var libs, Test, test, i, array, expected, iterations, when, promises;
 
 libs = require('./libs');
 Test = require('./test');
+when = require('when');
 
 iterations = 10000;
 
@@ -30,40 +31,30 @@ for(i = 1; i<iterations; i++) {
 
 test = new Test('promise-sequence', iterations);
 
-runTest('when.js',
-	function(val) { return libs.when.resolve(val); }
-);
+promises = [];
+for(var lib in libs) {
+	promises.push(runTest(lib, libs[lib].fulfilled));
+}
 
-runTest('Q',
-	function(val) { return libs.q.resolve(val); }
-);
-
-runTest('deferred',
-	function(val) { return libs.deferred(val); }
-);
-
-runTest('jQuery',
-	function(val) { return new libs.jquery.Deferred().resolve(val).promise(); }
-);
-
-test.report();
+when.all(promises, test.report.bind(test));
 
 function runTest(name, createPromise) {
-	var start, p;
+	var start;
 
 	// Start timer
 	start = Date.now();
-	
+
 	// Use reduce to chain <iteration> number of promises back
 	// to back.  The final result will only be computed after
 	// all promises have resolved
-	p = array.reduce(function(promise, nextVal) {
+	return array.reduce(function(promise, nextVal) {
 		return promise.then(function(currentVal) {
 			// Uncomment if you want progress indication:
 			//if(nextVal % 1000 === 0) console.log(name, nextVal);
 			return createPromise(currentVal + nextVal);
 		});
-	}, createPromise(0));
+	}, createPromise(0)).then(function() {
+		test.addResult(name, Date.now() - start);
+	});
 
-	test.addResult(name, Date.now() - start);
 }

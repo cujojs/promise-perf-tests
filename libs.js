@@ -16,5 +16,6 @@ module.exports = {
 	when: require('lib/adapter/when'),
 	q: require('lib/adapter/q'),
 	deferred: require('lib/adapter/deferred'),
-	jquery: require('lib/adapter/jquery')
+	jquery: require('lib/adapter/jquery'),
+	rsvp: require('lib/adapter/rsvp')
 };

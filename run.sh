@@ -17,7 +17,7 @@ runTest defer-reject.js
 runTest defer-sequence.js
 
 # Higher order operations, if supported
-runTest map.js
-runTest reduce-small.js
-runTest reduce-large.js
+# runTest map.js
+# runTest reduce-small.js
+# runTest reduce-large.js
 

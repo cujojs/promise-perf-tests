@@ -9,10 +9,11 @@
 // of this test.
 //
 
-var libs, Test, test, i, array, expected, iterations;
+var libs, Test, test, i, array, expected, iterations, when, promises;
 
 libs = require('./libs');
 Test = require('./test');
+when = require('when');
 
 iterations = 10000;
 
@@ -26,56 +27,34 @@ for(i = 1; i<iterations; i++) {
 
 test = new Test('defer-sequence', iterations);
 
-runTest('when.js',
-	function() { return libs.when.defer(); }
-);
+promises = [];
+for(var lib in libs) {
+	promises.push(runTest(lib, libs[lib].pending));
+}
 
-runTest('Q',
-	function() { return libs.q.defer(); }
-);
-
-runTest('deferred',
-	function() { return libs.deferred(); }
-);
-
-runTest('jQuery',
-	function() { return new libs.jquery.Deferred(); }
-);
-
-test.report();
+when.all(promises, test.report.bind(test));
 
 function runTest(name, createDeferred) {
-	var start, d, getPromise;
-
-	// Self-optimizing getPromise to handle API variations
-	getPromise = function(def) {
-		if(typeof def.promise.then === 'function') {
-			getPromise = function(def) { return def.promise; };
-		} else {
-			getPromise = function(def) { return def.promise(); };
-		}
-
-		return getPromise(def);
-	};
+	var start, d;
 
 	// Start timer
 	start = Date.now();
 
 	d = createDeferred();
-	d.resolve(0);
-	
+	d.fulfill(0);
+
 	// Use reduce to chain <iteration> number of promises back
 	// to back.  The final result will only be computed after
 	// all promises have resolved
-	array.reduce(function(promise, nextVal) {
+	return array.reduce(function(promise, nextVal) {
 		return promise.then(function(currentVal) {
 			// Uncomment if you want progress indication:
 			//if(nextVal % 1000 === 0) console.log(name, nextVal);
 			var d = createDeferred();
-			d.resolve(currentVal + nextVal);
-			return getPromise(d);
+			d.fulfill(currentVal + nextVal);
+			return d.promise;
 		});
-	}, getPromise(d));
-
-	test.addResult(name, Date.now() - start);
+	}, d.promise).then(function() {
+		test.addResult(name, Date.now() - start);
+	});
 }

@@ -21,15 +21,9 @@ Test = require('./test');
 iterations = 10000;
 test = new Test('defer-create', iterations);
 
-when = libs.when;
-q = libs.q;
-deferred = libs.deferred;
-JQDeferred = libs.jquery.Deferred;
-
-runTest('when.js', function() { return when.defer(); });
-runTest('Q', function() { return q.defer(); });
-runTest('deferred', function() { return deferred(); });
-runTest('jQuery', function() { return new JQDeferred(); });
+for(var lib in libs) {
+	runTest(lib, libs[lib].pending);
+}
 
 test.report();
 

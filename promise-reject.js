@@ -26,15 +26,9 @@ Test = require('./test');
 iterations = 10000;
 test = new Test('promise-reject', iterations);
 
-when = libs.when;
-q = libs.q;
-deferred = libs.deferred;
-JQDeferred = libs.jquery.Deferred;
-
-runTest('when.js', function(x) { return when.reject(x); });
-runTest('Q', function(x) { return q.reject(x); });
-runTest('deferred', function(x) { return deferred(new Error(x)); });
-runTest('jQuery', function(x) { return new JQDeferred().reject(x).promise(); });
+for(var lib in libs) {
+	runTest(lib, libs[lib].rejected);
+}
 
 test.report();
 

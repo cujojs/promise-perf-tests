@@ -16,38 +16,20 @@ Test = require('./test');
 iterations = 10000;
 test = new Test('defer-reject', iterations);
 
-when = libs.when;
-q = libs.q;
-deferred = libs.deferred;
-JQDeferred = libs.jquery.Deferred;
-
-runTest('when.js', function() { return when.defer(); });
-runTest('Q', function() { return q.defer(); });
-runTest('deferred', function() { return deferred(); }, function(d, x) { d.resolve(new Error(x)); });
-runTest('jQuery', function() { return new JQDeferred(); });
+for(var lib in libs) {
+	runTest(lib, libs[lib].pending);
+}
 
 test.report();
 
-function runTest(name, createDeferred, rejectDeferred) {
-	var start, d, getPromise, reject;
-
-	getPromise = function(def) {
-		if(typeof def.promise.then === 'function') {
-			getPromise = function(def) { return def.promise; };
-		} else {
-			getPromise = function(def) { return def.promise(); };
-		}
-
-		return getPromise(def);
-	};
-
-	reject = rejectDeferred || function(d, x) { d.reject(x); };
+function runTest(name, createDeferred) {
+	var start, d;
 
 	start = Date.now();
 	for(i = 0; i<iterations; i++) {
 		d = createDeferred();
-		getPromise(d).then(addOne);
-		reject(d, i);
+		d.promise.then(addOne);
+		d.reject(i);
 	}
 
 	test.addResult(name, Date.now() - start);
