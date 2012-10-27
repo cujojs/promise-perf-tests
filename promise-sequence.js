@@ -13,32 +13,27 @@
 // of this test.
 //
 
-var libs, Test, test, i, array, expected, iterations, when, promises;
+var libs, Test, test, i, array, iterations, testCases;
 
 libs = require('./libs');
 Test = require('./test');
-when = require('when');
 
 iterations = 10000;
 
 array = [];
-expected = 0;
-
 for(i = 1; i<iterations; i++) {
-	expected += i;
 	array.push(i);
 }
 
 test = new Test('promise-sequence', iterations);
 
-promises = [];
-for(var lib in libs) {
-	promises.push(runTest(lib, libs[lib].fulfilled));
-}
+test.run(Object.keys(libs).map(function(name) {
+	return function() {
+		return runTest(name, libs[name]);
+	};
+}));
 
-when.all(promises, test.report.bind(test));
-
-function runTest(name, createPromise) {
+function runTest(name, lib) {
 	var start;
 
 	// Start timer
@@ -51,9 +46,9 @@ function runTest(name, createPromise) {
 		return promise.then(function(currentVal) {
 			// Uncomment if you want progress indication:
 			//if(nextVal % 1000 === 0) console.log(name, nextVal);
-			return createPromise(currentVal + nextVal);
+			return lib.fulfilled(currentVal + nextVal);
 		});
-	}, createPromise(0)).then(function() {
+	}, lib.fulfilled(0)).then(function() {
 		test.addResult(name, Date.now() - start);
 	});
 

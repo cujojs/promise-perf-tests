@@ -27,6 +27,12 @@ Test.prototype = {
 		return this.results.slice().sort(sortByTotal);
 	},
 
+	run: function(testCases) {
+		testCases.slice(1).reduce(function(p, task) {
+			return p.then(task);
+		}, testCases[0]()).then(this.report.bind(this));
+	},
+
 	report: function() {
 		console.log('');
 		console.log('==========================================================');

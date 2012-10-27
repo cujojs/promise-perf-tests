@@ -9,38 +9,33 @@
 // of this test.
 //
 
-var libs, Test, test, i, array, expected, iterations, when, promises;
+var libs, Test, test, i, array, iterations;
 
 libs = require('./libs');
 Test = require('./test');
-when = require('when');
 
 iterations = 10000;
 
 array = [];
-expected = 0;
-
 for(i = 1; i<iterations; i++) {
-	expected += i;
 	array.push(i);
 }
 
 test = new Test('defer-sequence', iterations);
 
-promises = [];
-for(var lib in libs) {
-	promises.push(runTest(lib, libs[lib].pending));
-}
+test.run(Object.keys(libs).map(function(name) {
+	return function() {
+		return runTest(name, libs[name]);
+	};
+}));
 
-when.all(promises, test.report.bind(test));
-
-function runTest(name, createDeferred) {
+function runTest(name, lib) {
 	var start, d;
 
 	// Start timer
 	start = Date.now();
 
-	d = createDeferred();
+	d = lib.pending();
 	d.fulfill(0);
 
 	// Use reduce to chain <iteration> number of promises back
@@ -50,7 +45,7 @@ function runTest(name, createDeferred) {
 		return promise.then(function(currentVal) {
 			// Uncomment if you want progress indication:
 			//if(nextVal % 1000 === 0) console.log(name, nextVal);
-			var d = createDeferred();
+			var d = lib.pending();
 			d.fulfill(currentVal + nextVal);
 			return d.promise;
 		});
