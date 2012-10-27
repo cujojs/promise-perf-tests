@@ -2,7 +2,7 @@
 
 # Simple test runner and separator
 function runTest {
-	node $1
+	node lib/tests/$1
 }
 
 # Promise basics
