@@ -44,7 +44,7 @@ jQuery Deferred is not intended to be fully Promises/A compliant in its forwardi
 
 # Test Environment
 
-These tests were run on a MacBook Pro Intel Core i7, 2.3Ghz, 8g RAM, 256g SSD, using Node.js v0.8.14 installed via homebrew and the following library versions (`npm ls`):
+These tests were run on a MacBook Pro Intel Core i7, 2.3Ghz, 8g RAM, 256g SSD, using Node.js v0.8.14 installed via [nvm](https://github.com/creationix/nvm) and the following library versions (`npm ls`):
 
 ```text
 promise-perf-tests@0.3.0 /Users/brian/Projects/cujojs/promise-perf-tests
