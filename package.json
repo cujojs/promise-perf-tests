@@ -1,6 +1,6 @@
 {
 	"name": "promise-perf-tests",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"dependencies": {
 		"when": "",
 		"q": "",
@@ -9,6 +9,6 @@
 		"rsvp": ""
 	},
 	"scripts": {
-		"test": "./run.sh"
+		"test": "./bin/run.sh"
 	}
 }
