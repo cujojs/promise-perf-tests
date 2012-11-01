@@ -6,13 +6,13 @@ function runTest {
 }
 
 # Promise basics
-runTest promise-create.js
+runTest promise-fulfill.js
 runTest promise-reject.js
 runTest promise-sequence.js
 
 # Deferred basics
 runTest defer-create.js
-runTest defer-resolve.js
+runTest defer-fulfill.js
 runTest defer-reject.js
 runTest defer-sequence.js
 

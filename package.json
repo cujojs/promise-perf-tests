@@ -5,8 +5,9 @@
 		"when": "",
 		"q": "",
 		"deferred": "",
-		"jquery": "",
-		"rsvp": ""
+		"rsvp": "",
+		"jquery-browserify": "",
+		"jsdom": ">= 0.2.18"
 	},
 	"scripts": {
 		"test": "./bin/run.sh"
