@@ -6,10 +6,11 @@
 		"q": "",
 		"deferred": "",
 		"rsvp": "",
+		"laissez-faire": "",
 		"jquery-browserify": "",
 		"jsdom": ">= 0.2.18"
 	},
 	"scripts": {
-		"test": "./bin/run.sh"
+		"test": "node ./lib/run-tests.js"
 	}
 }
