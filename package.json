@@ -5,6 +5,7 @@
 		"when": "",
 		"q": "",
 		"deferred": "",
+		"laissez-faire": "",
 		"rsvp": "",
 		"jquery-browserify": "",
 		"jsdom": ">= 0.2.18"
