@@ -24,7 +24,7 @@ Right now, the tests are runnable en masse via `npm test` in unix-like environme
 
 ## avow
 
-[avow](https://github.com/briancavalier/avow) is an example Promises/A+ implementation.  In its default configuration, it uses asynchronous resolutions and does not call `Object.freeze`.  However, it can be configured to use synchronous resolutions, and/or `Object.freeze`.  Performance tests are run using the default configuration.
+[avow](https://github.com/briancavalier/avow) is an example [Promises/A+](http://promises-aplus.github.com/promises-spec/) implementation.  In its default configuration, it uses asynchronous resolutions and does not call `Object.freeze`.  However, it can be configured to use synchronous resolutions, and/or `Object.freeze`.  Performance tests are run using the default configuration.
 
 ## Q
 
