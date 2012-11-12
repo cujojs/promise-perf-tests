@@ -42,9 +42,13 @@ These tests use jQuery via [jquery-browserify](https://github.com/jmars/jquery-b
 
 jQuery Deferred is not intended to be fully Promises/A compliant in its forwarding behavior.  We've done our best to design the tests so that that does not affect the performance characteristics.  While this *does* affect the *computation results* of some tests, it can be ignored for most performance testing purposes.
 
+## Laisseze-faire
+
+[Laisseze-faire](https://github.com/jkroso/Laissez-faire) uses synchronous resolutions, and it doesn't use `Object.freeze`.
+
 # Test Environment
 
-These tests were run on a MacBook Pro Intel Core i7, 2.3Ghz, 8g RAM, 256g SSD, using Node.js v0.8.14 installed via homebrew and the following library versions (`npm ls`):
+These tests were run on a MacBook Pro Intel Core i7, 2.3Ghz, 8g RAM, 256g SSD, using Node.js v0.8.14 installed via [nvm](https://github.com/creationix/nvm) and the following library versions (`npm ls`):
 
 ```text
 promise-perf-tests@0.3.0 /Users/brian/Projects/cujojs/promise-perf-tests
