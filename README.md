@@ -22,6 +22,10 @@ Right now, the tests are runnable en masse via `npm test` in unix-like environme
 
 [when.js](https://github.com/cujojs/when) uses synchronous resolutions, and no longer uses `Object.freeze()` as of v1.6.0, to avoid this unfortunate [v8-imposed performance penalty](http://stackoverflow.com/questions/8435080/any-performance-benefit-to-locking-down-javascript-objects).
 
+## avow
+
+[avow](https://github.com/briancavalier/avow) is an example [Promises/A+](http://promises-aplus.github.com/promises-spec/) implementation.  In its default configuration, it uses asynchronous resolutions and does not call `Object.freeze`.  However, it can be configured to use synchronous resolutions, and/or `Object.freeze`.  Performance tests are run using the default configuration.
+
 ## Q
 
 [Q](https://github.com/kriskowal/q) uses asynchronous resolutions, and calls `Object.freeze` on its promises, and so it incurs the [v8-imposed performance penalty](http://stackoverflow.com/questions/8435080/any-performance-benefit-to-locking-down-javascript-objects).
@@ -33,6 +37,10 @@ Right now, the tests are runnable en masse via `npm test` in unix-like environme
 ## deferred
 
 [deferred](https://github.com/medikoo/deferred) uses synchronous resolutions, and doesn't use `Object.freeze`.
+
+## laissez-faire
+
+[lassez-faire](https://github.com/jkroso/Laissez-faire) uses synchronous resolutions, and doesn't use `Object.freeze`.
 
 ## jQuery Deferred
 
@@ -51,7 +59,7 @@ jQuery Deferred is not intended to be fully Promises/A compliant in its forwardi
 These tests were run on a MacBook Pro Intel Core i7, 2.3Ghz, 8g RAM, 256g SSD, using Node.js v0.8.14 installed via [nvm](https://github.com/creationix/nvm) and the following library versions (`npm ls`):
 
 ```text
-promise-perf-tests@0.3.0 /Users/brian/Projects/cujojs/promise-perf-tests
+├── avow@1.0.0
 ├─┬ deferred@0.6.1
 │ ├── es5-ext@0.9.1
 │ ├── event-emitter@0.2.1
@@ -69,9 +77,10 @@ promise-perf-tests@0.3.0 /Users/brian/Projects/cujojs/promise-perf-tests
 │   │ └─┬ combined-stream@0.0.3
 │   │   └── delayed-stream@0.0.5
 │   └── mime@1.2.7
+├── laissez-faire@0.1.2
 ├── q@0.8.9
 ├── rsvp@1.0.0
-└── when@1.6.0
+└── when@1.6.1
 ```
 
 # Test Results
@@ -84,77 +93,93 @@ Test: promise-fulfill x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
 when            4   0.0004        -
+laissez         5   0.0005    25.00
 deferred        7   0.0007    75.00
-rsvp           49   0.0049  1125.00
-q             140   0.0140  3400.00
-jquery        178   0.0178  4350.00
+avow           24   0.0024   500.00
+rsvp           74   0.0074  1750.00
+q             145   0.0145  3525.00
+jquery        154   0.0154  3750.00
+Should be empty: []
 
 ==========================================================
 Test: promise-reject x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
 when            8   0.0008        -
-rsvp           49   0.0049   512.50
-deferred       64   0.0064   700.00
-q             164   0.0164  1950.00
-jquery        200   0.0200  2400.00
+avow           13   0.0013    62.50
+rsvp           48   0.0048   500.00
+laissez        82   0.0082   925.00
+deferred       83   0.0083   937.50
+q             158   0.0158  1875.00
+jquery        196   0.0196  2350.00
 
 ==========================================================
 Test: promise-sequence x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
 when            8   0.0008        -
-deferred       11   0.0011    37.50
-rsvp          205   0.0205  2462.50
-jquery        381   0.0381  4662.50
-q             631   0.0631  7787.50
+laissez        13   0.0013    62.50
+deferred       19   0.0019   137.50
+avow          106   0.0106  1225.00
+rsvp          242   0.0242  2925.00
+jquery        462   0.0462  5675.00
+q             601   0.0601  7412.50
 
 ==========================================================
 Test: defer-create x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when            5   0.0005        -
-deferred       22   0.0022   340.00
-rsvp           56   0.0056  1020.00
-jquery        157   0.0157  3040.00
-q             233   0.0233  4560.00
+laissez         1   0.0001        -
+when            5   0.0005   400.00
+avow           18   0.0018  1700.00
+deferred       28   0.0028  2700.00
+rsvp           60   0.0060  5900.00
+jquery        160   0.0160 15900.00
+q             238   0.0238 23700.00
 
 ==========================================================
 Test: defer-fulfill x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when           36   0.0036        -
-rsvp          169   0.0169   369.44
-deferred      245   0.0245   580.56
-jquery        377   0.0377   947.22
-q             765   0.0765  2025.00
+avow           28   0.0028        -
+when           35   0.0035    25.00
+laissez        42   0.0042    50.00
+rsvp          183   0.0183   553.57
+deferred      227   0.0227   710.71
+jquery        401   0.0401  1332.14
+q             817   0.0817  2817.86
+Should be empty: []
 
 ==========================================================
 Test: defer-reject x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when           26   0.0026        -
-rsvp          155   0.0155   496.15
-deferred      312   0.0312  1100.00
-jquery        450   0.0450  1630.77
-q             772   0.0772  2869.23
+when           27   0.0027        -
+avow           31   0.0031    14.81
+laissez        99   0.0099   266.67
+rsvp          290   0.0290   974.07
+deferred      300   0.0300  1011.11
+jquery        398   0.0398  1374.07
+q             889   0.0889  3192.59
 
 ==========================================================
 Test: defer-sequence x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when           18   0.0018        -
-deferred      160   0.0160   788.89
-rsvp          281   0.0281  1461.11
-jquery        392   0.0392  2077.78
-q            1027   0.1027  5605.56
+laissez        12   0.0012        -
+when           18   0.0018    50.00
+avow           97   0.0097   708.33
+deferred      189   0.0189  1475.00
+rsvp          306   0.0306  2450.00
+jquery        411   0.0411  3325.00
+q            1023   0.1023  8425.00
 
 ==========================================================
 Test: map x 10000
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
 when           12   0.0012        -
-deferred       27   0.0027   125.00
+deferred       29   0.0029   141.67
 
 ==========================================================
 Test: reduce-small x 609
@@ -171,7 +196,7 @@ NOTE: in node v0.8.14, deferred.reduce causes a
 stack overflow for an array length >= 610
 ----------------------------------------------------------
 Name      Time ms   Avg ms   Diff %
-when           12   0.0012        -
+when           13   0.0013        -
 deferred [RangeError: Maximum call stack size exceeded]
 ```
 
