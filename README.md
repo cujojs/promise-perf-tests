@@ -38,10 +38,6 @@ Right now, the tests are runnable en masse via `npm test` in unix-like environme
 
 [deferred](https://github.com/medikoo/deferred) uses synchronous resolutions, and doesn't use `Object.freeze`.
 
-## laissez-faire
-
-[lassez-faire](https://github.com/jkroso/Laissez-faire) uses synchronous resolutions, and doesn't use `Object.freeze`.
-
 ## jQuery Deferred
 
 [jQuery](http://jquery.com) uses synchronous resolutions, and it doesn't use `Object.freeze`.

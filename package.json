@@ -8,7 +8,6 @@
 		"deferred": "",
 		"laissez-faire": "",
 		"rsvp": "",
-		"laissez-faire": "",
 		"jquery-browserify": "",
 		"jsdom": ">= 0.2.18"
 	},
