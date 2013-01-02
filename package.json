@@ -1,17 +1,19 @@
 {
-	"name": "promise-perf-tests",
-	"version": "0.3.2",
-	"dependencies": {
-		"when": "",
-		"avow": "",
-		"q": "",
-		"deferred": "",
-		"laissez-faire": "",
-		"rsvp": "",
-		"jquery-browserify": "",
-		"jsdom": ">= 0.2.18"
-	},
-	"scripts": {
-		"test": "node ./lib/run-tests.js"
-	}
+  "name": "promise-perf-tests",
+  "version": "0.3.2",
+  "dependencies": {
+    "when": "",
+    "avow": "",
+    "q": "",
+    "deferred": "",
+    "laissez-faire": "",
+    "rsvp": "",
+    "jquery-browserify": "",
+    "jsdom": ">= 0.2.18",
+    "b": "",
+    "colors": "~0.6.0-1"
+  },
+  "scripts": {
+    "test": "node ./lib/run-tests.js"
+  }
 }
