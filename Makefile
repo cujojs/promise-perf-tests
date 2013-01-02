@@ -1,5 +1,5 @@
 run:
-	@node lib/run.js
+	@node lib/run-all.js
 
 doc:
 	@cat docs/head.md > Readme.md
