@@ -13,7 +13,9 @@
     "b": "https://github.com/jkroso/b/archive/1.0.1.tar.gz",
     "colors": "",
     "cli-table": "",
-    "commander": "~1.1.1"
+    "commander": "~1.1.1",
+    "promises-a": "~2.3.0",
+    "micro-promise": ""
   },
   "bin": {
     "pperf": "bin/cli.js"

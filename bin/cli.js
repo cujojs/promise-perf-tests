@@ -13,9 +13,11 @@ program.version(require('../package.json').version)
 	.parse(process.argv)
 
 var childArgs = []
+if (program.adapter) childArgs.push(program.adapter)
 
 if (program.test === 'all') {
-	fork(resolvePath(__dirname, '../lib/run-all.js'), program.adapter ? [program.adapter] : [])
+	fork(resolvePath(__dirname, '../lib/run-all.js'), childArgs)
 } else {
-	fork(resolvePath(__dirname, '../lib/run.js'), [program.test])
+	childArgs.unshift(program.test)
+	fork(resolvePath(__dirname, '../lib/run.js'), childArgs)
 }
