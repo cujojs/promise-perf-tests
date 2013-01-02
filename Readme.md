@@ -82,108 +82,129 @@ These tests were run on a MacBook Pro Intel Core i7, 2.3Ghz, 8g RAM, 256g SSD, u
 # Test Results
 
 Each test is sorted from best to worst time. Times are in milliseconds, and Diff is the percentage difference from the best time.
+
 ```
-Sequence resolve
+State transition -> fulfill (10,000 iterations)
+Transition a pending promise to a fulfilled state
 ┌────────────────┬──────────────┬──────────────┬──────────────┐
-│                │   total (ms) │ per run (ns) │     diff (%) │
+│                │   total (ms) │ average (ns) │     diff (%) │
 ├────────────────┼──────────────┼──────────────┼──────────────┤
-│ jquery         │           34 │     33949224 │            - │
-│ laissez-faire  │           72 │     72028744 │          112 │
-│ avow           │           75 │     75286324 │          122 │
-│ when           │           99 │     99492889 │          193 │
-│ rsvp           │          156 │    156295743 │          360 │
-│ deferred       │          159 │    159132310 │          369 │
-│ q              │          306 │    306479641 │          803 │
+│ q              │           36 │         3641 │            - │
+│ avow           │           62 │         6181 │           70 │
+│ when           │           74 │         7352 │          102 │
+│ laissez-faire  │           80 │         7973 │          119 │
+│ rsvp           │           87 │         8655 │          138 │
+│ jquery         │          113 │        11340 │          211 │
+│ deferred       │          149 │        14909 │          309 │
 └────────────────┴──────────────┴──────────────┴──────────────┘
 Create a fulfilled promise (10,000 iterations)
-Create a promise thats already fulfilled. Some libraries provide an optimised way of doing this
+Create a promise thats already fulfilled.
+Some libraries provide an optimised way of doing this
+
+This test DOES NOT care about when all the promises
+have actually resolved (e.g. Q promises always resolve in a
+future turn).  This is a pure, brute force sync code test.
 ┌────────────────┬──────────────┬──────────────┬──────────────┐
-│                │   total (ms) │ per run (ns) │     diff (%) │
+│                │   total (ms) │ average (ns) │     diff (%) │
 ├────────────────┼──────────────┼──────────────┼──────────────┤
-│ when           │          103 │        10262 │            - │
-│ laissez-faire  │          174 │        17437 │           70 │
-│ deferred       │          323 │        32331 │          215 │
-│ q              │          447 │        44704 │          336 │
-│ jquery         │          489 │        48937 │          377 │
-│ avow           │          542 │        54241 │          429 │
-│ rsvp           │          831 │        83099 │          710 │
-└────────────────┴──────────────┴──────────────┴──────────────┘
-Create a rejected promise (10,000 iterations)
-Create a promise thats already rejected. Some libraries provide an optimised way of doing this
-┌────────────────┬──────────────┬──────────────┬──────────────┐
-│                │   total (ms) │ per run (ns) │     diff (%) │
-├────────────────┼──────────────┼──────────────┼──────────────┤
-│ q              │           44 │         4427 │            - │
-│ laissez-faire  │          110 │        11001 │          149 │
-│ when           │          168 │        16759 │          279 │
-│ deferred       │          226 │        22638 │          411 │
-│ avow           │          498 │        49843 │         1026 │
-│ jquery         │          603 │        60255 │         1261 │
-│ rsvp           │          779 │        77939 │         1661 │
+│ when           │            7 │          742 │            - │
+│ laissez-faire  │            9 │          859 │           16 │
+│ deferred       │           21 │         2123 │          186 │
+│ avow           │           30 │         3047 │          311 │
+│ rsvp           │          161 │        16097 │         2070 │
+│ q              │          323 │        32276 │         4252 │
+│ jquery         │          446 │        44597 │         5913 │
 └────────────────┴──────────────┴──────────────┴──────────────┘
 Instantiation (10,000 iterations)
-How long does it take to create an instance
+Create a pending instance
 ┌────────────────┬──────────────┬──────────────┬──────────────┐
-│                │   total (ms) │ per run (ns) │     diff (%) │
+│                │   total (ms) │ average (ns) │     diff (%) │
 ├────────────────┼──────────────┼──────────────┼──────────────┤
-│ laissez-faire  │           54 │         5368 │            - │
-│ avow           │           92 │         9212 │           72 │
-│ when           │          148 │        14803 │          176 │
-│ q              │          332 │        33168 │          518 │
-│ jquery         │          367 │        36698 │          584 │
-│ rsvp           │          631 │        63147 │         1076 │
-│ deferred       │          660 │        66003 │         1130 │
+│ laissez-faire  │            2 │          172 │            - │
+│ avow           │            6 │          581 │          237 │
+│ when           │            7 │          740 │          330 │
+│ deferred       │           44 │         4436 │         2474 │
+│ rsvp           │           56 │         5648 │         3177 │
+│ q              │          229 │        22950 │        13217 │
+│ jquery         │          472 │        47234 │        27308 │
 └────────────────┴──────────────┴──────────────┴──────────────┘
 Pending sequence
 How long does it take to create chain of un-resolved promises
+
+Performance of the synchronous component of creating deferreds. 
+For most libraries the synchronous component is all there is but 
+some may not. This test doesn't take those libraries into account
 ┌────────────────┬──────────────┬──────────────┬──────────────┐
-│                │   total (ms) │ per run (ns) │     diff (%) │
+│                │   total (ms) │ average (ns) │     diff (%) │
 ├────────────────┼──────────────┼──────────────┼──────────────┤
-│ laissez-faire  │          145 │    144599017 │            - │
-│ avow           │          148 │    147635656 │            2 │
-│ when           │          199 │    199195207 │           38 │
-│ jquery         │          401 │    401080881 │          177 │
-│ rsvp           │          651 │    651292186 │          350 │
-│ deferred       │          833 │    833489168 │          476 │
-│ q              │          845 │    845178831 │          484 │
-└────────────────┴──────────────┴──────────────┴──────────────┘
-State transition -> reject (10,000 iterations)
-How long does it take to go from pending to rejected
-┌────────────────┬──────────────┬──────────────┬──────────────┐
-│                │   total (ms) │ per run (ns) │     diff (%) │
-├────────────────┼──────────────┼──────────────┼──────────────┤
-│ rsvp           │           22 │         2244 │            - │
-│ laissez-faire  │          138 │        13815 │          516 │
-│ jquery         │          582 │        58150 │         2491 │
-│ q              │          608 │        60767 │         2608 │
-│ deferred       │          612 │        61169 │         2626 │
-│ avow           │          864 │        86421 │         3751 │
-│ when           │          915 │        91486 │         3976 │
-└────────────────┴──────────────┴──────────────┴──────────────┘
-State transition -> fulfill (10,000 iterations)
-How long does it take to go from pending to resolved
-┌────────────────┬──────────────┬──────────────┬──────────────┐
-│                │   total (ms) │ per run (ns) │     diff (%) │
-├────────────────┼──────────────┼──────────────┼──────────────┤
-│ laissez-faire  │            1 │          149 │            - │
-│ deferred       │           21 │         2114 │         1319 │
-│ jquery         │          207 │        20734 │        13817 │
-│ avow           │          574 │        57418 │        38440 │
-│ rsvp           │          684 │        68374 │        45794 │
-│ when           │          782 │        78213 │        52398 │
-│ q              │          919 │        91899 │        61584 │
+│ laissez-faire  │           10 │      9552571 │            - │
+│ avow           │           11 │     10870630 │           14 │
+│ when           │           13 │     12893515 │           35 │
+│ deferred       │           94 │     93684568 │          881 │
+│ rsvp           │          101 │    100523888 │          952 │
+│ q              │          408 │    407971716 │         4171 │
+│ jquery         │          782 │    782353715 │         8090 │
 └────────────────┴──────────────┴──────────────┴──────────────┘
 Create a promise chain of an already resolved promise
-Performance of large number of promises chained together
+Performance of large sequence of then calls on a resolved promise
+
+If a library supports a lighter weight notion of a promise, that
+will be used instead of a full deferred (which is typically more
+expensive)
 ┌────────────────┬──────────────┬──────────────┬──────────────┐
-│                │   total (ms) │ per run (ns) │     diff (%) │
+│                │   total (ms) │ average (ns) │     diff (%) │
 ├────────────────┼──────────────┼──────────────┼──────────────┤
-│ when           │          307 │    102445646 │            - │
-│ jquery         │          442 │    147460347 │           44 │
-│ q              │          501 │    167022469 │           63 │
-│ laissez-faire  │          511 │    170370066 │           66 │
-│ rsvp           │          569 │    189572293 │           85 │
-│ deferred       │          840 │    279988250 │          173 │
-│ avow           │          873 │    291157843 │          184 │
+│ when           │           43 │      4261614 │            - │
+│ laissez-faire  │          115 │     11535532 │          171 │
+│ deferred       │          126 │     12645855 │          197 │
+│ rsvp           │          430 │     42979469 │          909 │
+│ jquery         │          465 │     46507427 │          991 │
+│ avow           │          601 │     60148598 │         1311 │
+│ q              │          705 │     70546844 │         1555 │
+└────────────────┴──────────────┴──────────────┴──────────────┘
+State transition -> reject (10,000 iterations)
+Transition a pending promise to rejected state
+┌────────────────┬──────────────┬──────────────┬──────────────┐
+│                │   total (ms) │ average (ns) │     diff (%) │
+├────────────────┼──────────────┼──────────────┼──────────────┤
+│ when           │          177 │        17728 │            - │
+│ avow           │          199 │        19857 │           12 │
+│ rsvp           │          232 │        23163 │           31 │
+│ laissez-faire  │          262 │        26204 │           48 │
+│ deferred       │          282 │        28163 │           59 │
+│ jquery         │          395 │        39507 │          123 │
+│ q              │          537 │        53659 │          203 │
+└────────────────┴──────────────┴──────────────┴──────────────┘
+Create a rejected promise (10,000 iterations)
+Create a promise thats already rejected.
+Some libraries provide an optimised way of doing this
+
+This test DOES NOT care about when all the promises
+have actually resolved (e.g. Q promises always resolve in a
+future turn).  This is a pure, brute force sync code test.
+┌────────────────┬──────────────┬──────────────┬──────────────┐
+│                │   total (ms) │ average (ns) │     diff (%) │
+├────────────────┼──────────────┼──────────────┼──────────────┤
+│ deferred       │          145 │        14522 │            - │
+│ laissez-faire  │          199 │        19920 │           37 │
+│ avow           │          209 │        20926 │           44 │
+│ when           │          254 │        25395 │           75 │
+│ rsvp           │          480 │        47968 │          230 │
+│ q              │          483 │        48341 │          233 │
+│ jquery         │          614 │        61399 │          323 │
+└────────────────┴──────────────┴──────────────┴──────────────┘
+Sequence resolve
+Transition a large sequence of pending promises to a fulfilled state.
+Data will be propagated down the sequence
+┌────────────────┬──────────────┬──────────────┬──────────────┐
+│                │   total (ms) │ average (ns) │     diff (%) │
+├────────────────┼──────────────┼──────────────┼──────────────┤
+│ avow           │           11 │      1136397 │            - │
+│ when           │           14 │      1432241 │           26 │
+│ laissez-faire  │           16 │      1592183 │           40 │
+│ jquery         │           36 │      3601497 │          217 │
+│ deferred       │           38 │      3762173 │          231 │
+│ rsvp           │           44 │      4436490 │          290 │
+│ q              │          235 │     23466166 │         1965 │
 └────────────────┴──────────────┴──────────────┴──────────────┘
 ```
