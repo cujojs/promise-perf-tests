@@ -15,7 +15,8 @@
     "cli-table": "",
     "commander": "~1.1.1",
     "promises-a": "~2.3.0",
-    "micro-promise": ""
+    "micro-promise": "",
+    "randy": "~1.4.0"
   },
   "bin": {
     "pperf": "bin/cli.js"
