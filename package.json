@@ -10,7 +10,7 @@
     "rsvp": "",
     "jquery-browserify": "",
     "jsdom": ">= 0.2.18",
-    "b": "https://github.com/jkroso/b/archive/1.0.1.tar.gz",
+    "b": "*",
     "colors": "",
     "cli-table": "",
     "commander": "~1.1.1",
