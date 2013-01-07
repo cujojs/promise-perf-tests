@@ -16,7 +16,9 @@
     "commander": "~1.1.1",
     "promises-a": "~2.3.0",
     "micro-promise": "",
-    "randy": "~1.4.0"
+    "randy": "~1.4.0",
+    "promisify": "https://github.com/jkroso/promisify/archive/0.1.0.tar.gz",
+    "exec": "*"
   },
   "bin": {
     "pperf": "bin/cli.js"
