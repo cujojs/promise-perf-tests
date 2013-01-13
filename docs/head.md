@@ -13,8 +13,10 @@ Right now, the tests are runnable en masse via `npm test` in unix-like environme
 1. Clone the repo
 1. `npm install` to install the promise implementations to be tested
 1. Run tests:
-    * Run all tests: `npm test`
-    * Run a single test with node: `node <test>`
+    * Run all tests: `bin/pperf`
+    * Run a single test: `bin/pperf -t <test>`
+    * Run a single implementation `bin/pperf -a <implementation>`
+    * Print available tests and implementations `bin/pperf -h`
 
 # Implementation-specific notes
 
@@ -48,39 +50,14 @@ jQuery Deferred is not intended to be fully Promises/A compliant in its forwardi
 
 ## Laisseze-faire
 
-[Laisseze-faire](https://github.com/jkroso/Laissez-faire) uses synchronous resolutions, and it doesn't use `Object.freeze`.
+[Laisseze-faire](https://github.com/jkroso/Laissez-faire) uses synchronous resolutions, and it doesn't provide proxies by default.
+
+## Micro-promise
+
+Uses synchronous resolutions an doesn't freeze its objects.
 
 # Test Environment
 
 These tests were run on a MacBook Pro Intel Core i7, 2.3Ghz, 8g RAM, 256g SSD, using Node.js v0.8.14 installed via [nvm](https://github.com/creationix/nvm) and the following library versions (`npm ls`):
-
-```text
-├── avow@1.0.0
-├─┬ deferred@0.6.1
-│ ├── es5-ext@0.9.1
-│ ├── event-emitter@0.2.1
-│ └── next-tick@0.1.0
-├── jquery-browserify@1.8.1
-├─┬ jsdom@0.2.19
-│ ├─┬ contextify@0.1.3
-│ │ └── bindings@1.0.0
-│ ├── cssom@0.2.5
-│ ├── cssstyle@0.2.3
-│ ├── htmlparser@1.7.6
-│ └─┬ request@2.11.4
-│   ├─┬ form-data@0.0.3
-│   │ ├── async@0.1.9
-│   │ └─┬ combined-stream@0.0.3
-│   │   └── delayed-stream@0.0.5
-│   └── mime@1.2.7
-├── laissez-faire@0.1.2
-├── q@0.8.9
-├── rsvp@1.0.0
-└── when@1.6.1
-```
-
-# Test Results
-
-Each test is sorted from best to worst time. Times are in milliseconds, and Diff is the percentage difference from the best time.
 
 ```

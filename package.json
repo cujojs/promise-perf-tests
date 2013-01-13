@@ -25,5 +25,8 @@
   },
   "scripts": {
     "test": "node ./lib/run-tests.js"
+  },
+  "devDependencies": {
+    "stripcolorcodes": "~0.1.0"
   }
 }
