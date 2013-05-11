@@ -7,26 +7,9 @@
     "q": "",
     "deferred": "",
     "laissez-faire": "",
-    "rsvp": "https://github.com/tildeio/rsvp.js/tarball/master",
-    "promises-a": "*",
     "micro-promise": "",
-    "jquery-browserify": "",
-    "jsdom": ">= 0.2.18",
     "b": "*",
-    "colors": "",
-    "cli-table": "",
-    "commander": "~1.1.1",
-    "randy": "~1.4.0",
-    "promisify": "https://github.com/jkroso/promisify/archive/0.1.0.tar.gz",
-    "exec": "*"
-  },
-  "bin": {
-    "pperf": "bin/cli.js"
-  },
-  "scripts": {
-    "test": "node ./lib/run-tests.js"
-  },
-  "devDependencies": {
-    "stripcolorcodes": "~0.1.0"
+    "promise": "~2.0.0",
+    "rsvp": "~1.2.0"
   }
 }

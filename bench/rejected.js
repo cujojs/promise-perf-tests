@@ -5,15 +5,11 @@
 // have actually resolved (e.g. Q promises always resolve in a
 // future turn).  This is a pure, brute force sync code test.
 
-var name = process.argv[2].match(/\/([^\/]+)\.js$/)[1]
-/**
- * Load the adapter
- */
-var lib = require(process.argv[2])
+var createRejected = implementation.rejected
 
 // Cache an Error for speed
 var error = new Error('rejected')
 
-require('../bench')(name, 10000, function (i) {
-	lib.rejected(error)
-})
+module.exports = function () {
+	createRejected(error)
+}
