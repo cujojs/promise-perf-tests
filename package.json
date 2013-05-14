@@ -1,17 +1,15 @@
 {
-	"name": "promise-perf-tests",
-	"version": "0.3.2",
-	"dependencies": {
-		"when": "",
-		"avow": "",
-		"q": "",
-		"deferred": "",
-		"laissez-faire": "",
-		"rsvp": "",
-		"jquery-browserify": "",
-		"jsdom": ">= 0.2.18"
-	},
-	"scripts": {
-		"test": "./bin/run.sh"
-	}
+  "name": "promise-perf-tests",
+  "version": "0.3.2",
+  "dependencies": {
+    "when": "",
+    "avow": "",
+    "q": "",
+    "deferred": "",
+    "laissez-faire": "",
+    "micro-promise": "",
+    "b": "*",
+    "promise": "~2.0.0",
+    "rsvp": "~1.2.0"
+  }
 }
