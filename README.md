@@ -1,3 +1,7 @@
+## This project is no longer maintained
+
+---
+
 # Promise implementation performance tests
 
 This is a set of *basic* performance tests for promise implementations.  As is almost always the case, take these with the usual grains of salt.  That said, they should give a reasonable ballpark comparison of the performance characteristics of common, basic operations that most promise libraries provide.
